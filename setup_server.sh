@@ -7,7 +7,7 @@
 echo "Install Docker"
 
 #install docker
-sudo apt install apache2-utils docker.io docker-compose
+sudo apt install docker.io docker-compose
 
 #enable docker on reboot
 sudo systemctl enable --now docker
@@ -30,13 +30,17 @@ sudo ufw enable
 
 echo "Setup traefik"
 
-mkdir ~/traefik
+mkdir -p ~/traefik
 cp traefik/traefik.yml ~/traefik/traefik.yml
 touch ~/traefik/acme.json
-chmod 600 ~/acme.json
+chmod 600 ~/traefik/acme.json
 cp traefik/docker-compose.yml ~/traefik/docker-compose.yml
 docker network create proxy
+
+DIR=$PWD
+cd ~/traefik
 docker-compose up -d
+cd $DIR
 
 ##############################################
 # Portainer - Controlling Container          #
@@ -44,11 +48,14 @@ docker-compose up -d
 
 echo "Setup Portainer"
 
-mkdir ~/portainer
-mkdir ~/portainer/data
+mkdir -p ~/portainer
+mkdir -p ~/portainer/data
 cp portainer/docker-compose.yml ~/portainer/docker-compose.yml
-docker-compose up -d
 
+DIR=$PWD
+cd ~/portainer
+docker-compose up -d
+cd $DIR
 
 
 
