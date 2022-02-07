@@ -22,3 +22,8 @@ services:
       - "traefik.http.routers.foundryvtt.middlewares=foundryvtt-https-redirect"
       - "traefik.http.routers.foundryvtt.rule=Host(`play.yourdomain.com`)"
       - "traefik.http.services.foundryvtt.loadbalancer.server.port=30000"
+
+networks:
+  proxy:
+    external: true
+
