@@ -1,27 +1,27 @@
 version: '3'
 services:
-  foundryvtt:
+  foundryvtt-§§USER§§:
     image: direckthit/fvtt-docker:latest
-    container_name: fvtt
+    container_name: §§USER§§-fvtt
     restart: unless-stopped
     networks:
       - proxy
     volumes:
-      - /home/user/foundrydata:/data/foundryvtt
-      - /home/user/foundrydl:/host
+      - /home/§§USER§§/foundrydata:/data/foundryvtt
+      - /home/§§USER§§/foundrydl:/host
     labels:
       - "traefik.docker.network=proxy"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.foundryvtt-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.foundryvtt-secure.entrypoints=https"
-      - "traefik.http.routers.foundryvtt-secure.rule=Host(`play.yourdomain.com`)"
-      - "traefik.http.routers.foundryvtt-secure.service=foundryvtt"
-      - "traefik.http.routers.foundryvtt-secure.tls=true"
-      - "traefik.http.routers.foundryvtt-secure.tls.certresolver=http"
-      - "traefik.http.routers.foundryvtt.entrypoints=http"
-      - "traefik.http.routers.foundryvtt.middlewares=foundryvtt-https-redirect"
-      - "traefik.http.routers.foundryvtt.rule=Host(`play.yourdomain.com`)"
-      - "traefik.http.services.foundryvtt.loadbalancer.server.port=30000"
+      - "traefik.http.middlewares.§§USER§§foundryvtt-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.§§USER§§foundryvtt-secure.entrypoints=https"
+      - "traefik.http.routers.§§USER§§foundryvtt-secure.rule=Host(`§§GAMEURL§§`)"
+      - "traefik.http.routers.§§USER§§foundryvtt-secure.service=§§USER§§foundryvtt"
+      - "traefik.http.routers.§§USER§§foundryvtt-secure.tls=true"
+      - "traefik.http.routers.§§USER§§foundryvtt-secure.tls.certresolver=http"
+      - "traefik.http.routers.§§USER§§foundryvtt.entrypoints=http"
+      - "traefik.http.routers.§§USER§§foundryvtt.middlewares=§§USER§§foundryvtt-https-redirect"
+      - "traefik.http.routers.§§USER§§foundryvtt.rule=Host(`§§GAMEURL§§`)"
+      - "traefik.http.services.§§USER§§foundryvtt.loadbalancer.server.port=§§PORT§§"
 
 networks:
   proxy:

@@ -1,27 +1,48 @@
 #!/bin/bash
 
-sudo adduser $1
-sudo usermod -aG sudo $1
-sudo usermod -aG docker $1
+usage()
+{
+	echo "Usage $0 -n name -g game_url -p game_port"
+	exit 1
+}
 
-if [ "$2" = "-game" ]; then
-echo "is DM"
-sudo mkdir -p /home/$1/foundry
-sudo chown $1:$1 /home/$1/foundry
-sudo mkdir -p /home/$1/foundrydata
-sudo chown $1:$1 /home/$1/foundrydata
-sudo mkdir -p /home/$1/foundrydl
-sudo chown $1:$1 /home/$1/foundrydl
+while getopts g:n:p:h flag
+do
+	case "${flag}" in
+		h) usage;;
+		n) name=${OPTARG};;
+		p) port=${OPTARG};;
+		g) game=${OPTARG};;
+		?) usage
+	esac
+done
 
-sudo cp foundry/docker-compose.yml /home/$1/foundry/docker-compose.yml
-sudo chown $1:$1 /home/$1/foundry/docker-compose.yml
-sudo mkdir -p /home/$1/foundrydata/Config
-sudo chown $1:$1 /home/$1/foundrydata/Config
-sudo cp foundry/options.json /home/$1/foundrydata/Config/options.json
-sudo chown $1:$1 /home/$1/foundrydata/Config/options.json
+sudo adduser $name
+sudo usermod -aG sudo $name
+sudo usermod -aG docker $name
 
-sudo chmod 777 -R /home/$1/foundrydata
-sudo chmod 777 -R /home/$1/foundrydl
+sudo mkdir -p /home/$name/foundry
+sudo chown $name:$name /home/$name/foundry
+sudo mkdir -p /home/$name/foundrydata
+sudo chown $name:$name /home/$name/foundrydata
+sudo mkdir -p /home/$name/foundrydl
+sudo chown $name:$name /home/$name/foundrydl
 
-fi
+sudo cp foundry/docker-compose.yml /home/$name/foundry/docker-compose.yml
+sudo chown $name:$name /home/$name/foundry/docker-compose.yml
+sudo mkdir -p /home/$name/foundrydata/Config
+sudo chown $name:$name /home/$name/foundrydata/Config
+sudo cp foundry/options.json /home/$name/foundrydata/Config/options.json
+sudo chown $name:$name /home/$name/foundrydata/Config/options.json
+
+sudo chmod 777 -R /home/$name/foundrydata
+sudo chmod 777 -R /home/$name/foundrydl
+
+sudo sed -i "s/§§USER§§/$name/g" /home/$name/foundry/docker-compose.yml
+sudo sed -i "s/§§PORT§§/$port/g" /home/$name/foundry/docker-compose.yml
+sudo sed -i "s/§§GAMEURL§§/$game/g" /home/$name/foundry/docker-compose.yml
+
+sudo sed -i "s/§§PORT§§/$port/g" /home/$name/foundrydata/Config/options.json
+
+
 

@@ -1,6 +1,6 @@
 {
-  "port": 30001,
-  "upnp": true,
+  "port": §§PORT§§,
+  "upnp": false,
   "fullscreen": false,
   "hostname": null,
   "localHostname": null,
