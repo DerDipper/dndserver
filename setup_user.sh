@@ -20,5 +20,8 @@ sudo chown $1:$1 /home/$1/foundrydata/Config
 sudo cp foundry/options.json /home/$1/foundrydata/Config/options.json
 sudo chown $1:$1 /home/$1/foundrydata/Config/options.json
 
+sudo chmod 777 -R /home/$1/foundrydata
+sudo chmod 777 -R /home/$1/foundrydl
+
 fi
 
